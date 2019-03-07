@@ -12,23 +12,21 @@ using WebApi.Services.Services.Filters;
 
 namespace WebApi.API_MVC.Controllers
 {
-    public class ItemController : Controller
+    public class ItemsController : Controller
     {
         private readonly ItemRepositorio context;
 
-        public ItemController(ItemRepositorio context)
+        public ItemsController(ItemRepositorio context)
         {
             this.context = context;
         }
-
-        // GET: Item
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
 
             return View(await context.SelecionarTodosAsync());
         }
-
-        // GET: Item/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +42,7 @@ namespace WebApi.API_MVC.Controllers
 
             return View(item);
         }
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -58,7 +57,7 @@ namespace WebApi.API_MVC.Controllers
             return  RedirectToAction(nameof(Index));
 
         }
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,7 +97,7 @@ namespace WebApi.API_MVC.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        [HttpPost]
+        [HttpGet]
         public  IActionResult Delete(int id)
         {
             try

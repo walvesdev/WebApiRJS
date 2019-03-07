@@ -11,7 +11,7 @@ using WebApi.Models.ItemModel;
 
 namespace WebApi.API_MVC.Controllers.API
 {
-    [Route("apimvc/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase
     {

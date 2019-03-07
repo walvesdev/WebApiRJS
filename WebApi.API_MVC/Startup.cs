@@ -28,7 +28,6 @@ namespace WebApi.API_MVC
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionSrting = Configuration.GetConnectionString("ApplicationContext");
@@ -48,7 +47,6 @@ namespace WebApi.API_MVC
             /*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);*/
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -58,7 +56,6 @@ namespace WebApi.API_MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -68,8 +65,8 @@ namespace WebApi.API_MVC
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "default", template: "{controller=Items}/{action=Index}/{id?}");
                 //routes.MapRoute(name: "api", template: "api/{controller}/{id?}");
-                routes.MapRoute(name: "default", template: "{controller=Item}/{action=Index}/{id?}");
             });
         }
     }
