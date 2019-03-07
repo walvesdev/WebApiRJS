@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,11 @@ namespace WebApi.API_MVC.Controllers.API
             try
             {
                 RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                restClient.CookieContainer = new CookieContainer();
+
                 RestRequest restRequest = new RestRequest(string.Format("item"), Method.GET);
+                restRequest.AddHeader("Content-Type", "application/json");
+
                 IRestResponse restResponse = restClient.Execute(restRequest);
                 List<Item> items = new JsonDeserializer().Deserialize<List<Item>>((restResponse));
 
