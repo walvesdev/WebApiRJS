@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApi.Dados.AcessoDados.Repositorios
 {
-    public interface IRepositorio<T, TId> where T : class
+    public interface IRepositorio<T, TId> : IDisposable where T : class
     {
         List<T> SelecionarTodos();
         Task<List<T>> SelecionarTodosAsync();

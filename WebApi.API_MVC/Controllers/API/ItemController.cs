@@ -23,7 +23,102 @@ namespace WebApi.API_MVC.Controllers.API
         }
 
         [HttpGet]
-        public ActionResult<List<ItemsList>> Get()
+        public ActionResult<List<Item>> Get()
+        {
+            try
+            {
+                RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                RestRequest restRequest = new RestRequest(string.Format("item"), Method.GET);
+                IRestResponse restResponse = restClient.Execute(restRequest);
+                List<Item> items = new JsonDeserializer().Deserialize<List<Item>>((restResponse));
+
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+
+        }
+
+        [HttpGet("{id}", Name = "GetById")]
+        public ActionResult<Item> Get(int id)
+        {
+            try
+            {
+                RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                RestRequest restRequest = new RestRequest(string.Format("item/{0}",id), Method.GET);
+                IRestResponse restResponse = restClient.Execute(restRequest);
+                Item item = new JsonDeserializer().Deserialize<Item>((restResponse));
+
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody] Item itemBody)
+        {
+            try
+            {
+                RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                RestRequest restRequest = new RestRequest(string.Format("item/"), Method.POST);
+
+                restRequest.AddJsonBody(itemBody);
+                IRestResponse restResponse = restClient.Execute(restRequest);
+
+                Item item = new JsonDeserializer().Deserialize<Item>((restResponse));
+
+                return CreatedAtRoute("GetById", new { id = item.ID }, item);
+
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Put([FromRoute] int id, [FromBody] Item itemBody)
+        {
+            try
+            {
+                RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                RestRequest restRequest = new RestRequest(string.Format("item/{0}", id), Method.PUT);
+
+                restRequest.AddJsonBody(itemBody);
+                IRestResponse restResponse = restClient.Execute(restRequest);
+
+
+                return new NoContentResult();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                RestClient restClient = new RestClient(string.Format("http://localhost:5000/api/"));
+                RestRequest restRequest = new RestRequest(string.Format("item/{0}", id), Method.DELETE);
+                restClient.Execute(restRequest);
+
+                return new NoContentResult();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpGet("/api/rjs")]
+        public ActionResult<List<ItemsList>> GetRjs()
         {
             try
             {
@@ -43,28 +138,5 @@ namespace WebApi.API_MVC.Controllers.API
 
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Item> Get(int id)
-        {
-            return null;
-        }
-
-        [HttpPost]
-        public void Post([FromBody] Item cliente)
-        {
-            
-        }
-
-        [HttpPut("{id}")]
-        public void Put([FromRoute] int id, [FromBody] Item value)
-        {
-            
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete([FromRoute] int id)
-        {
-            
-        }
     }
 }

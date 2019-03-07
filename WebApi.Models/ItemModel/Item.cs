@@ -11,7 +11,7 @@ namespace WebApi.Models.ItemModel
         public bool Active { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        public decimal? Value { get; set; }
+        public float? Value { get; set; }
 
         
     }
