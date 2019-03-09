@@ -37,7 +37,7 @@ class IndexController {
     Salvar() {
         try {
             var item = indexController.GetItemSemId();
-            if (item.hasOwnProperty(item.id)) {                
+            if (item.hasOwnProperty(item.id)) {
                 alert('Informe todos os dado para ser cadastrados!')
             } else {
                 $.ajax({
@@ -79,34 +79,34 @@ class IndexController {
     Editar() {
         if ($('#id').val().trim() != null && $('#id').val().trim() != "") {
 
-            if ($('#date').val().trim() != null && $('#date').val().trim() != "") { 
-            try {
-                var item = indexController.GetItemComId();
+            if ($('#date').val().trim() != null && $('#date').val().trim() != "") {
+                try {
+                    var item = indexController.GetItemComId();
 
-                $.ajax({
-                    url: `http://localhost:5000/api/item/${item.id}`,
-                    type: "put",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(item)
-                })
-                    .done(function (item) {
-                        indexController.LimparCampos();
-                        location.reload();
+                    $.ajax({
+                        url: `http://localhost:5000/api/item/${item.id}`,
+                        type: "put",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(item)
                     })
-                    .fail(function () {
-                        alert("Item não encontrado!")
-                    })
-            } catch (erro) {
-                alert(`Erro ${erro}`)
+                        .done(function (item) {
+                            indexController.LimparCampos();
+                            location.reload();
+                        })
+                        .fail(function () {
+                            alert("Item não encontrado!")
+                        })
+                } catch (erro) {
+                    alert(`Erro ${erro}`)
+                }
+            } else {
+                alert('Informa a data do item!');
             }
-        } else {
-            alert('Informa a data do item!');
-        }
         } else {
             alert('Selecione um item para ser excluido!');
         }
-    
+
     }
     Excluir() {
         if ($('#id').val().trim() != null && $('#id').val().trim() != "" && confirm('Desja excluir o item selecionado?')) {
@@ -198,7 +198,7 @@ class IndexController {
     GetDatSet() {
 
         try {
-            $.ajax({
+            $.get({
                 url: 'http://localhost:5000/api/item',
             })
                 .done(function (resultado) {
@@ -214,22 +214,22 @@ class IndexController {
     }
     ItemInputs() {
         $("#listarTabela tbody").on("click", "tr", function () {
-            
-                $('.selected').css('backgroun-color', 'red')
-                $("#salvar").prop('disabled', true);
 
-                var id = $(this).children().first().text();
-                var active = JSON.parse($(this).children().first().next().text());
-                var name = $(this).children().first().next().next().text();
-                var date = $(this).children().first().next().next().next().text();
-                var value = $(this).children().first().next().next().next().next().text();
+            $('.selected').css('backgroun-color', 'red')
+            $("#salvar").prop('disabled', true);
 
-                $('#name').val(name);
-                $('#date').val(date);
-                $('#value').val(value);
-                $('#id').val(id);
-                $('#active').prop('checked', active);
-            
+            var id = $(this).children().first().text();
+            var active = JSON.parse($(this).children().first().next().text());
+            var name = $(this).children().first().next().next().text();
+            var date = $(this).children().first().next().next().next().text();
+            var value = $(this).children().first().next().next().next().next().text();
+
+            $('#name').val(name);
+            $('#date').val(date);
+            $('#value').val(value);
+            $('#id').val(id);
+            $('#active').prop('checked', active);
+
         });
     }
 }

@@ -50,8 +50,7 @@ namespace WebApi.API_A
             app.UseCors(option => option
             .AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials());
+            .AllowAnyMethod());
 
             app.UseMvc(routes =>
             {
