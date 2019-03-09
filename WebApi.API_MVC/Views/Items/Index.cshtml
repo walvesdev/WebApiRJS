@@ -32,16 +32,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Active)
+                    @item.Active
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.Name
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Date)
+                    @item.Date.ToString("dd/MM/yyyy")
                 </td>
                 <td>
-                    R$ @Html.DisplayFor(modelItem => item.Value),00
+                    R$ @item.Value
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

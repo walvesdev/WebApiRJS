@@ -1,0 +1,19 @@
+label[for=active] {
+    display: inline-block;
+    margin-top: 20px;
+
+}
+input[type=checkbox] {
+    display: inline-block;
+    
+}
+.total{
+    display: inline-block;
+    text-align: right;
+}
+.totalH5{
+    color : red;
+}
+form {
+    margin: 20px;
+}
