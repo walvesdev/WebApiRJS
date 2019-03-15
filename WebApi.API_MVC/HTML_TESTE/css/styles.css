@@ -17,3 +17,9 @@ input[type=checkbox] {
 form {
     margin: 20px;
 }
+.linha {
+    background-color: #d0c9c9;
+}
+a {
+    cursor: pointer;
+}
