@@ -46,7 +46,7 @@ class IndexController {
                     alert('Informe todos os dado para ser cadastrados!')
                 } else {
                     $.ajax({
-                        url: 'http://localhost:5000/api/item',
+                        url: 'http://localhost:3000/api/ItemMVC',
                         type: "post",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -68,7 +68,7 @@ class IndexController {
     BuscarTodos() {
         try {
             $.ajax({
-                url: 'http://localhost:5000/api/item',
+                url: 'http://localhost:3000/api/ItemMVC',
             })
                 .done(function (resultado) {
                     var listaItems = resultado;
@@ -90,7 +90,7 @@ class IndexController {
                     //var item = indexController.GetItemComId();
 
                     $.ajax({
-                        url: `http://localhost:5000/api/item/${itemId.id}`,
+                        url: `http://localhost:3000/api/ItemMVC/${itemId.id}`,
                         type: "put",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -121,7 +121,7 @@ class IndexController {
         try {
             if (confirm('Desja excluir o item selecionado?')) {
                 $.ajax({
-                    url: `http://localhost:5000/api/item/${id}`,
+                    url: `http://localhost:3000/api/ItemMVC/${id}`,
                     type: "delete"
                 })
                     .done(function (item) {

@@ -14,11 +14,11 @@ namespace WebApi.API_MVC.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemController : ControllerBase
+    public class ItemMVCController : ControllerBase
     {
         private readonly ItemRepositorio context;
 
-        public ItemController(ItemRepositorio context)
+        public ItemMVCController(ItemRepositorio context)
         {
             this.context = context;
         }

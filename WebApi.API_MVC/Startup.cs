@@ -59,6 +59,11 @@ namespace WebApi.API_MVC
                 app.UseHsts();
             }
 
+            app.UseCors(option => option
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseCookiePolicy();
