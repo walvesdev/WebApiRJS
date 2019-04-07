@@ -83,7 +83,7 @@ namespace WebApi.API_A.Controllers
                 }
                 context.Atualizar(item);
 
-                return new NoContentResult();
+                return  Ok(item);
             }
             catch (Exception e)
             {

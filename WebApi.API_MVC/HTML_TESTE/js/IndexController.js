@@ -2,7 +2,6 @@ let indexController;
 
 class IndexController {
 
-
     GetItemSemId() {
 
         var name = $('#name').val().trim();
@@ -97,9 +96,11 @@ class IndexController {
                         dataType: "json",
                         data: JSON.stringify(itemId)
                     })
-                        .done(function (item) {
+                        .done(function (item) {                                                        
+
                             indexController.LimparCampos();
                             location.reload();
+
                         })
                         .fail(function () {
                             alert("Item não encontrado!")
@@ -119,14 +120,12 @@ class IndexController {
 
         try {
             if (confirm('Desja excluir o item selecionado?')) {
-                //var item = indexController.GetItemComId();
                 $.ajax({
                     url: `http://localhost:5000/api/item/${id}`,
                     type: "delete"
                 })
                     .done(function (item) {
                         indexController.LimparCampos();
-                        location.reload();
                     })
                     .fail(function () {
                         alert("Item não encontrado!")
@@ -136,7 +135,6 @@ class IndexController {
             alert(`Erro ${erro}`)
         }
     }
-
     Cancelar() {
         indexController.LimparCampos();
     }
@@ -150,30 +148,38 @@ class IndexController {
         $('.linha').removeClass("linha");
 
     }
+    PreencherItemTabela(item) {
+
+        $(`#item-${item.id}-id`).remove();
+        $(`#item-${item.id}-active`).remove();
+        $(`#item-${item.id}-name`).remove();
+        $(`#item-${item.id}-date`).remove();
+        $(`#item-${item.id}-value`).remove();
+        $(`#item-${item.id}-acao`).remove();
+
+        $(`#item-${item.id}`).append(`                
+                <td id="item-${item.id}-id">${item.id}</td>
+                <td id="item-${item.id}-active">${item.active}</td>
+                <td id="item-${item.id}-name">${item.name}</td>
+                <td id="item-${item.id}-date">${item.date}</td>
+                <td id="item-${item.id}-value">${item.value}</td>  
+                <td id="item-${item.id}-acao"><a class="fas fa-pencil-alt editar" onclick="indexController.EditarLinha(${item.id})"></a>   |  <a class="fas fa-trash-alt remover" onclick="indexController.ExcluirLinha(${item.id})"></a></td>
+                `);
+
+    }
     PreencherTabela(listaItems) {
         for (var item of listaItems) {
             $('.tabela').append(`
-                <tr>
-                <td>${item.id}</td>
-                <td>${item.active}</td>
-                <td>${item.name}</td>
-                <td>${item.date}</td>
-                <td>${item.value}</td> 
-                <td><a class="fas fa-pencil-alt editar"></a>   |  <a class="fas fa-trash-alt remover"></a></td>
+                <tr id="item-${item.id}">
+                <td id="item-${item.id}-id">${item.id}</td>
+                <td id="item-${item.id}-active">${item.active}</td>
+                <td id="item-${item.id}-name">${item.name}</td>
+                <td id="item-${item.id}-date">${item.date}</td>
+                <td id="item-${item.id}-value">${item.value}</td> 
+                <td id="item-${item.id}-acao"><a class="fas fa-pencil-alt editar" onclick="indexController.EditarLinha(${item.id})"></a>   |  <a class="fas fa-trash-alt remover" onclick="indexController.ExcluirLinha(${item.id})"></a></td>
                 </tr>                         
                 `);
         }
-    }
-    PreencherItemTabela(item) {
-        $('.tabela').append(`
-                <tr>
-                <td>${item.id}</td>
-                <td>${item.active}</td>
-                <td>${item.name}</td>
-                <td>${item.date}</td>
-                <td>${item.value}</td>   
-                </tr>                         
-                `);
     }
     PreencherTotal(listaItems) {
         var soma = listaItems.map(i => i.value).reduce((a, b) => {
@@ -183,104 +189,37 @@ class IndexController {
         <h5 class="totalH5">Total R$: ${soma}</h5>
         `);
     }
-    PreencherDataTable(dataset) {
+    EditarLinha(id) {
 
-        $('#listarTabela').DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-            },
-            data: dataset,
+        indexController.LimparCampos();
 
-            "columns": [
-                { "data": "id" },
-                { "data": "active" },
-                { "data": "name" },
-                { "data": "date", render: function (data) { return (moment(data).format('DD/MM/YYYY')) } },
-                { "data": "value" },
-                {
-                    "data": null, render: function () {
-                        return '<i class="fas fa-pencil-alt editar"></i>' + '   |   ' + '<i class="fas fa-trash-alt"></i>';
+        $(`#item-${id}`).removeClass("linha");
+        $(`#item-${id}`).addClass("linha");
 
-                    }
-                }
-            ]
-        });
-        indexController.PreencherTotal(dataset);
+        var id = id;
+        var active = JSON.parse($(`#item-${id}-active`).text());
+        var name = $(`#item-${id}-name`).text();
+        var date = $(`#item-${id}-date`).text();
+        var value = $(`#item-${id}-value`).text();
 
+        $('#name').val(name);
+        $('#date').val(date);
+        $('#value').val(value);
+        $('#id').val(id);
+        $('#active').prop('checked', active);
     }
-    GetDatSet() {
+    ExcluirLinha(id) {
 
-        try {
-            $.get({
-                url: 'http://localhost:5000/api/item',
-            })
-                .done(function (resultado) {
-                    indexController.PreencherDataTable(resultado)
-                })
-                .fail(function () {
-                    alert("Items não encontrado!")
-                })
-        } catch (erro) {
-            alert("Items não encontrado!");
+        indexController.Excluir(id);
 
-        }
-    }
-    ItemInputs() {
-
-        let id;
-        let active;
-        let name;
-        let date;
-        let value;
-        let editar;
-        let excluir;
-
-        $("#divTabela #listarTabela tbody").on("click", "tr", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            $('.linha').removeClass("linha");
-            $(this).addClass("linha");
-
-            id = $(this).children().first().text();
-            active = JSON.parse($(this).children().first().next().text());
-            name = $(this).children().first().next().next().text();
-            date = $(this).children().first().next().next().next().text();
-            value = $(this).children().first().next().next().next().next().text();
-
-            editar = $(this).children().first().next().next().next().next().next().children().first();
-            excluir = $(this).children().first().next().next().next().next().next().children().first().next();
-
-            editar.click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                $('#name').val(name);
-                $('#date').val(date);
-                $('#value').val(value);
-                $('#id').val(id);
-                $('#active').prop('checked', active);
-            })
-            excluir.click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                indexController.Excluir(id);
-                $('.linha').removeClass("linha");
-                location.reload();
-
-            });
-           
-        });
-
-
+        $(`#item-${id}`).remove();
+        $(`#item-${id}`).removeClass("linha");
     }
 }
 
 function main() {
     indexController = new IndexController();
     indexController.BuscarTodos();
-    indexController.ItemInputs();
 
 }
 
