@@ -22,7 +22,7 @@ namespace WebApi.API_MVC
                 .UseStartup<Startup>()
                 .ConfigureKestrel((context, options) =>
                 {
-                    options.ListenAnyIP(3000);
+                    options.ListenLocalhost(3000);
                 });
 
     }
