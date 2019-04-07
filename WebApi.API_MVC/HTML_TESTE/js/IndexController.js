@@ -161,7 +161,7 @@ class IndexController {
                 <td id="item-${item.id}-id">${item.id}</td>
                 <td id="item-${item.id}-active">${item.active}</td>
                 <td id="item-${item.id}-name">${item.name}</td>
-                <td id="item-${item.id}-date">${item.date}</td>
+                <td id="item-${item.id}-date">${(moment(item.date).format('YYYY-MM-DD'))}</td>
                 <td id="item-${item.id}-value">${item.value}</td>  
                 <td id="item-${item.id}-acao"><a class="fas fa-pencil-alt editar" onclick="indexController.EditarLinha(${item.id})"></a>   |  <a class="fas fa-trash-alt remover" onclick="indexController.ExcluirLinha(${item.id})"></a></td>
                 `);
@@ -174,7 +174,7 @@ class IndexController {
                 <td id="item-${item.id}-id">${item.id}</td>
                 <td id="item-${item.id}-active">${item.active}</td>
                 <td id="item-${item.id}-name">${item.name}</td>
-                <td id="item-${item.id}-date">${item.date}</td>
+                <td id="item-${item.id}-date">${(moment(item.date).format('YYYY-MM-DD'))}</td>
                 <td id="item-${item.id}-value">${item.value}</td> 
                 <td id="item-${item.id}-acao"><a class="fas fa-pencil-alt editar" onclick="indexController.EditarLinha(${item.id})"></a>   |  <a class="fas fa-trash-alt remover" onclick="indexController.ExcluirLinha(${item.id})"></a></td>
                 </tr>                         
