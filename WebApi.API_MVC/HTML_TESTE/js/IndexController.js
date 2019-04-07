@@ -126,6 +126,7 @@ class IndexController {
                 })
                     .done(function (item) {
                         indexController.LimparCampos();
+                        location.reload();
                     })
                     .fail(function () {
                         alert("Item não encontrado!")
@@ -211,8 +212,6 @@ class IndexController {
     ExcluirLinha(id) {
 
         indexController.Excluir(id);
-
-        $(`#item-${id}`).remove();
         $(`#item-${id}`).removeClass("linha");
     }
 }
