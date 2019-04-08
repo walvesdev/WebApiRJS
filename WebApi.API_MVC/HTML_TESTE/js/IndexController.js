@@ -34,10 +34,11 @@ class IndexController {
         return item;
     }
     Salvar() {
+        
         try {
             var itemId = indexController.GetItemComId();
             var item = indexController.GetItemSemId();
-
+            
             if (itemId.id != "") {
                 indexController.Editar(itemId);
             } else {
@@ -83,15 +84,15 @@ class IndexController {
         }
     }
     Editar(itemId) {
+        
         if (itemId.id != null && itemId.id != "") {
 
             if (itemId.date != null && itemId.date != "") {
                 try {
-                    //var item = indexController.GetItemComId();
-
+                    
                     $.ajax({
                         url: `http://localhost:3000/api/ItemMVC/${itemId.id}`,
-                        type: "put",
+                        type: "PUT",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         data: JSON.stringify(itemId)
@@ -103,6 +104,7 @@ class IndexController {
 
                         })
                         .fail(function () {
+                            
                             alert("Item não encontrado!")
                         })
                 } catch (erro) {
