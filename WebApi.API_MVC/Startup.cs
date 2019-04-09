@@ -41,8 +41,8 @@ namespace WebApi.API_MVC
             });
 
 
-            services.AddMvc().AddFluentValidation();
-            services.AddTransient<IValidator<Item>, ItemValidator>();
+            services.AddMvc();//.AddFluentValidation();
+           // services.AddTransient<IValidator<Item>, ItemValidator>();
             
             /*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);*/
         }

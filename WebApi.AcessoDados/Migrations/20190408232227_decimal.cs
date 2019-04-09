@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi.Dados.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class @decimal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace WebApi.Dados.Migrations
                     Active = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    Value = table.Column<decimal>(type: "decimal", nullable: true)
+                    Value = table.Column<decimal>(type: "money", nullable: true)
                 },
                 constraints: table =>
                 {

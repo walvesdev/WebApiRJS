@@ -10,15 +10,15 @@ using WebApi.Dados.AcessoDados;
 namespace WebApi.Dados.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190306224916_Inicial")]
-    partial class Inicial
+    [Migration("20190408232227_decimal")]
+    partial class @decimal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("API")
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -35,7 +35,7 @@ namespace WebApi.Dados.Migrations
                     b.Property<string>("Name");
 
                     b.Property<decimal?>("Value")
-                        .HasColumnType("decimal");
+                        .HasColumnType("money");
 
                     b.HasKey("ID");
 

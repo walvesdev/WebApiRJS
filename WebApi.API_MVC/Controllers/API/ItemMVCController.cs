@@ -87,7 +87,7 @@ namespace WebApi.API_MVC.Controllers.API
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put([FromRoute] int id, [FromBody] Item itemBody)
+        public ActionResult Put(int id, Item itemBody)
         {
             try
             {
@@ -96,9 +96,9 @@ namespace WebApi.API_MVC.Controllers.API
 
                 restRequest.AddJsonBody(itemBody);
                 IRestResponse restResponse = restClient.Execute(restRequest);
+                Item item = new JsonDeserializer().Deserialize<Item>((restResponse));
 
-
-                return new NoContentResult();
+                return  Ok(item);
             }
             catch (Exception e)
             {

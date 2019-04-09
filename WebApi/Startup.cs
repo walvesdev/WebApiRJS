@@ -54,7 +54,7 @@ namespace WebApi.API_A
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "api", template: "api/{controller}/{id?}");
+                routes.MapRoute(name: "api", template: "api/{controller}/{action?}/{id?}");
             });
 
             serviceProvider.GetService<PreencherDados>().InicializaDB();

@@ -14,7 +14,7 @@ namespace WebApi.Dados.AcessoDados.TypeConfiguration
         {
             builder.ToTable("Items");
             builder.HasKey(p => p.ID);    
-            builder.Property(i => i.Value).HasColumnType("decimal");
+            builder.Property(i => i.Value).HasColumnType("money");
         }
     }
 }

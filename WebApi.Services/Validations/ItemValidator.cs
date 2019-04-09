@@ -13,7 +13,7 @@ namespace WebApi.Services.Services.Validations
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Digite o nome do item!")
-                .Length(0, 50).WithMessage("O nome pode conter no maxo 50 caracteres");
+                .Length(50).WithMessage("O nome pode conter no maxo 50 caracteres");
             RuleFor(x => x.Date)
                 .NotEmpty().WithMessage("Digite a data!");
             RuleFor(x => x.Active)
