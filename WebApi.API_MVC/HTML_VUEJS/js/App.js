@@ -31,7 +31,10 @@ const app = new Vue({
             value: "",
             active: false
         },
-        soma: 0
+        soma: 0,
+        alterar: false,
+        tituloItem: "Lista de items",
+        adicionarItem: true,
 
     },
     filters: {
@@ -44,29 +47,33 @@ const app = new Vue({
                     this.Editar(item);
                 } else {
 
-                    var newItem = {
-                        name: item.name,
-                        date: item.date,
-                        value: item.value,
-                        active: item.active
-                    }
-                    fetch('http://localhost:3000/api/ItemMVC',
-                        {
-                            method: "POST",
-                            body: JSON.stringify(newItem),
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(res => {
-                            this.BuscarTodos();
-                            toastr.success("Item salvo com sucesso!");
-                        })
-                        .catch((erro) => {
-                            toastr.error(`Erro ao Salvar ${erro}`)
+                    if (item.nome == "" || item.date == "" || item.value == "") {
+                        toastr.error('Informe todos os dados para ser cadastrados!')
+                    } else {
+                        var newItem = {
+                            name: item.name,
+                            date: item.date,
+                            value: item.value,
+                            active: item.active
+                        }
+                        fetch('http://localhost:3000/api/ItemMVC',
+                            {
+                                method: "POST",
+                                body: JSON.stringify(newItem),
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(res => {
+                                this.BuscarTodos();
+                                toastr.success("Item salvo com sucesso!");
+                            })
+                            .catch((erro) => {
+                                toastr.error(`Erro ao Salvar ${erro}`)
 
-                        });
+                            });
+                    }
                 }
             } catch (erro) {
                 alert(`Erro ${erro}`)
@@ -80,7 +87,7 @@ const app = new Vue({
                         this.items = res;
 
                         this.PreencherTotal(this.items);
-                        this.TabelaItems()
+
 
                     })
                     .catch(erro => toastr.error(`Erro ao buscar todos ${erro}`));
@@ -92,8 +99,8 @@ const app = new Vue({
             try {
                 this.item = item;
 
-                bootbox.confirm("Deseja editar o item selecionado?", function(result){
-                    
+                bootbox.confirm("Deseja editar o item selecionado?", function (result) {
+
                     fetch(`http://localhost:3000/api/ItemMVC/${app.item.id}`,
                         {
                             method: 'PUT',
@@ -120,10 +127,10 @@ const app = new Vue({
         },
         Excluir(id) {
             try {
-               this.item.id = id;
+                this.item.id = id;
 
-                bootbox.confirm("Deseja excluir o item selecionado?", function(result){
-                    
+                bootbox.confirm("Deseja excluir o item selecionado?", function (result) {
+
                     fetch(`http://localhost:3000/api/ItemMVC/${app.item.id}`,
                         {
                             method: "DELETE",
@@ -140,15 +147,14 @@ const app = new Vue({
                                     return item.id != id;
                                 })
                             app.items = lista;
-                            
+
                             app.PreencherTotal(app.items);
-                            app.TabelaItems();
                             toastr.success("Item Excluído com sucesso!");
                         })
                         .catch(erro => toastr.error(`Erro ao processar ao excluir ${erro}`));
-                
+
                 })
-                    
+
             } catch (erro) {
                 alert(`Erro ${erro}`)
             }
@@ -161,11 +167,14 @@ const app = new Vue({
                 value: item.value,
                 active: item.active
             }
+            this.tituloItem = "Editar item";
+            this.alterar = true;
+            this.adicionarItem = false;
         },
         ExcluirLinha(id) {
             this.Excluir(id);
         },
-        Cancelar(){
+        Cancelar() {
             this.item = {
                 id: "",
                 name: "",
@@ -173,6 +182,9 @@ const app = new Vue({
                 value: "",
                 active: false
             }
+            this.tituloItem = "Lista de items";
+            this.alterar = false;
+            this.adicionarItem = true;
         },
         PreencherTotal(listaItems) {
             this.soma = listaItems.map(i => i.value).reduce((a, b) => {
@@ -183,11 +195,16 @@ const app = new Vue({
             $(function () {
                 $('#TabelaItems').DataTable();
             })
+        },
+        Adicionar() {
+            this.tituloItem = "Cadastrar novo Item";
+            this.alterar = true;
+            this.adicionarItem = false;
         }
     },
     mounted() {
         this.BuscarTodos()
-
+        this.TabelaItems()
     },
 
 });

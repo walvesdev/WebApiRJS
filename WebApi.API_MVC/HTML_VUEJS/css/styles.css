@@ -1,25 +1,41 @@
 label[for=active] {
     display: inline-block;
     margin-top: 20px;
-
 }
+
 input[type=checkbox] {
     display: inline-block;
-    
 }
-.total{
+
+.total {
     display: inline-block;
     text-align: right;
 }
-.totalH5{
-    color : red;
+
+.totalH5 {
+    color: red;
+    float: right;
 }
+
 form {
-    margin: 20px;
+    margin: 20px 0;
 }
+
 .linha {
     background-color: #d0c9c9;
 }
+
 a {
     cursor: pointer;
+}
+
+#divTabela {
+    margin-top: 5%;
+}
+
+.tituloTabela {
+    color: chocolate;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 5%;
 }

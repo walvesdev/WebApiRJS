@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/toastr.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" 
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
     <title>Document</title>
@@ -20,28 +20,31 @@
 <body>
     <div class="container div-formulario" id="app">
         <div class="row align-items-center">
-            <div class="col-6">
+            <div class="col-8 mx-auto">
 
-                <form>
-                    <div class="form-group">
-                        <label for="id">Id</label>
+                <h6 class="tituloTabela mx-auto">{{tituloItem}}</h6>
+
+                <form v-show="alterar">
+                    <div class="form-group col-2 ">
+                        <label for="id"></label>
                         <input type="number" class="form-control" id="id" v-model="item.id" placeholder="Id" disabled>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-6">
                         <label for="name">Nome</label>
                         <input type="text" class="form-control" id="name" v-model="item.name" placeholder="Nome">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group col-6 ">
                         <label for="date">Data</label>
-                        <input type="date" class="form-control" id="date" v-model="item.date" placeholder="Data" required>
+                        <input type="date" class="form-control" id="date" v-model="item.date" placeholder="Data"
+                            required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group col-6">
                         <label for="value">Valor</label>
                         <input type="number" class="form-control" id="value" v-model="item.value" placeholder="Valor">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-6">
                         <label for="active">Item Ativo: </label>
                         <input type="checkbox" id="active" v-model="item.active" name=active placeholder="Ativo">
                     </div>
@@ -50,13 +53,9 @@
                     <button type="button" @click="Cancelar()" class="btn btn-warning">Cancelar</button>
 
                 </form>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 offset-md-8 total">
 
-                        </div>
-                    </div>
-                </div>
+                <button type="button" v-show="adicionarItem" @click="Adicionar()" class="btn btn-warning">Adicionar </button>
+
                 <h5 class="totalH5">Total {{soma | money}}</h5>
                 <div id="divTabela">
                     <table id="TabelaItems" class="table compact hover">
@@ -73,19 +72,19 @@
                         <tbody class="tabela">
                             <tr :id="`item-id-${c.id}`" v-for="c in items" :key="c.id">
                                 <th scope="row" :id="'item-'+c.id+'-id'">{{c.id}}</th>
-                                <td>{{c.active}}</td>
+                                <td><input type="checkbox" v-model="c.active" name=active placeholder="Ativo" disabled></td>
                                 <td>{{c.name}}</td>
                                 <td>{{c.date | formatDate}}</td>
                                 <td>{{c.value | money}}</td>
-                                <td><a class="fas fa-pencil-alt editar" @click="EditarLinha(c)"></a>   
-                                    |  <a class="fas fa-trash-alt remover" @click="ExcluirLinha(c.id)"></a></td>
-                                </tr>
+                                <td><a class="fas fa-pencil-alt editar" @click="EditarLinha(c)"></a>
+                                    | <a class="fas fa-trash-alt remover" @click="ExcluirLinha(c.id)"></a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
